@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 
 
 class SeriesController extends Controller
-{
+{    
+    public function __construct(private SeriesRepository $repository)
+    {
+    }
   
-
     public function index(Request $request)
     {
         $series = Series::all();
@@ -20,14 +22,13 @@ class SeriesController extends Controller
         return view('series.index')->with('series', $series)
             ->with('mensagemSucesso', $mensagemSucesso);
     }
-
     public function create()
     {
         return view('series.create');
     }
-    public function store(SeriesRepository $repository, SeriesFormRequest $request)
+    public function store(SeriesFormRequest $request)
     {
-        $serie = $repository->add($request);
+        $serie = $this->repository->add($request);
 
         return to_route('series.index')
             ->with('mensagem.sucesso', "Série '{$serie->nome}' adicionada com sucesso");
@@ -43,7 +44,6 @@ class SeriesController extends Controller
     {
         return view('series.edit')->with('serie', $series);
     }
-
     public function update(Series $series, SeriesFormRequest $request)
     {
         $series->fill($request->all());

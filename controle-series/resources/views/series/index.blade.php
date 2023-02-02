@@ -6,16 +6,20 @@
         {{ $mensagemSucesso }}
     </div>
     @endisset
+
     <ul class="list-group">
-        @foreach($series as $serie)
+        @foreach ($series as $serie)
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="{{ route('seasons.index', $serie->id) }}">
                 {{ $serie->nome }}
             </a>
 
             <span class="d-flex">
-                <a href="{{ Route('series.edit', $serie->id) }}" class="btn btn-primary btn-sm">E</a>
-                <form action="{{ route('series.destroy', $serie->id) }}" class="ms-2" method="post">
+                <a href="{{ route('series.edit', $serie->id) }}" class="btn btn-primary btn-sm">
+                    E
+                </a>
+
+                <form action="{{ route('series.destroy', $serie->id) }}" method="post" class="ms-2">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger btn-sm">
@@ -24,6 +28,6 @@
                 </form>
             </span>
         </li>
-        @endforeach 
+        @endforeach
     </ul>
 </x-layout>
